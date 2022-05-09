@@ -12,7 +12,7 @@ pipeline
     //  AWS_DEFAULT_REGION="ap-south-1" 
     //  IMAGE_REPO_NAME="jenkins-java"
     //  REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-     DOCKERHUB_CREDENTIALS=credentials('docker')
+     // DOCKERHUB_CREDENTIALS=credentials('docker')
  }
  tools
  {
@@ -99,36 +99,35 @@ pipeline
      stage('Docker Build and Tag') {
 
               steps {
-
+                 docker build -t maven-web-app
                   sh 'docker build -t sample:latest .'
-
-                  sh 'docker tag  sample nagapoornima/sample:latest'
+               //   sh 'docker tag  sample nagapoornima/sample:latest'
 
                     }
 
               }
 
-         stage('Login') {
+        //  stage('Login') {
 
-              steps {
+        //       steps {
 
-            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        //     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 
-                }
+        //         }
 
-              }
+        //       }
 
-          stage('Push') {
+        //   stage('Push') {
 
-                 steps {
+        //          steps {
 
-                  sh 'docker push  nagapoornima/sample:latest'
+        //           sh 'docker push  nagapoornima/sample:latest'
 
 
 
-                 }
+        //          }
 
-           }
+        //    }
      // Stopping Docker containers for cleaner Docker run
      stage('stop previous containers') {
          steps {
@@ -140,7 +139,7 @@ pipeline
     stage('Docker Run') {
      steps{
          script {
-                sh "docker run -d -p 9090:8080 --rm --name myjavaContainer sample:latest"
+                sh "docker run -d -p 9090:8080 --rm --name myjavaContainer maven-web-app"
             }
       }
     } 
