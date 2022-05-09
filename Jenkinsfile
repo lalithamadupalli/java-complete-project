@@ -8,15 +8,15 @@ pipeline
  agent any
  environment
  {
-     AWS_ACCOUNT_ID="470022230688"             
-     AWS_DEFAULT_REGION="ap-south-1" 
-     IMAGE_REPO_NAME="jenkins-java"
-     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    //  AWS_ACCOUNT_ID="470022230688"             
+    //  AWS_DEFAULT_REGION="ap-south-1" 
+    //  IMAGE_REPO_NAME="jenkins-java"
+    //  REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
      DOCKERHUB_CREDENTIALS=credentials('docker')
  }
  tools
  {
-      maven 'maven3'
+      maven 'maven'
  }   
 
  options 
@@ -32,7 +32,7 @@ pipeline
          {
              script
              {
-                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vasantha31/jenkins-java-ci-cd-pipeline.git']]])
+                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/poornima4824/java-complete-project.git']]])
                  COMMIT = sh (script: "git rev-parse --short=10 HEAD", returnStdout: true).trim()  
                  COMMIT_TAG = sh (script: "git tag --contains | head -1", returnStdout: true).trim() 
             }
@@ -41,9 +41,6 @@ pipeline
      }
      stage('Build')
      {   
-        //  when {
-        //     buildingTag()
-        //  }
          steps
          {
              sh "mvn clean package"
@@ -105,7 +102,7 @@ pipeline
 
                   sh 'docker build -t sample:latest .'
 
-                  sh 'docker tag  sample vasanthad/sample:latest'
+                  sh 'docker tag  sample nagapoornima/sample:latest'
 
                     }
 
@@ -125,7 +122,7 @@ pipeline
 
                  steps {
 
-                  sh 'docker push  vasanthad/sample:latest'
+                  sh 'docker push  nagapoornima/sample:latest'
 
 
 
@@ -143,7 +140,7 @@ pipeline
     stage('Docker Run') {
      steps{
          script {
-                sh "docker run -d -p 8082:8080 --rm --name myjavaContainer sample:latest"
+                sh "docker run -d -p 9090:8080 --rm --name myjavaContainer sample:latest"
             }
       }
     } 
