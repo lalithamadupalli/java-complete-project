@@ -97,10 +97,9 @@ pipeline
     //  }
     
      stage('Docker Build and Tag') {
-
               steps {
-                 docker build -t maven-web-app
-                  sh 'docker build -t sample:latest .'
+                   docker build -t maven-web-app
+                 // sh 'docker build -t sample:latest .'
                //   sh 'docker tag  sample nagapoornima/sample:latest'
 
                     }
