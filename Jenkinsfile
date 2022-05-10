@@ -42,8 +42,9 @@ stages {
     stage('Jmter test') {
          steps {
             sh "pwd"
-            dir("apache-jmeter-5.4.3 ")
-            sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
+                  dir("apache-jmeter-5.4.3 ")
+                     sh "pwd"
+                     sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
               //sh "mvn clean verify"
               }
      }
