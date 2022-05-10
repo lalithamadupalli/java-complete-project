@@ -33,8 +33,8 @@ stages {
      }
     stage('Jmter test') {
          steps {
-             sh "mvn test"
-         }
+              sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
+              }
      }
     stage('Execute Sonarqube Report') {
          steps
