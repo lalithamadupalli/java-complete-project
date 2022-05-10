@@ -31,11 +31,11 @@ stages {
              sh "mvn clean package"
          }
      }
-     stage('Jmter test') {
-         steps {
-             sh "mvn test"
-         }
-     }
+    //  stage('Jmter test') {
+    //      steps {
+    //          sh "mvn test"
+    //      }
+    //  }
      stage('Execute Sonarqube Report') {
          steps
          {
