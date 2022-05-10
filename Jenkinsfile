@@ -46,159 +46,27 @@ pipeline
              sh "mvn clean package"
          }
      }
-    //  stage('Execute Sonarqube Report')
-    //  {
-    //      steps
-    //      {
-    //         withSonarQubeEnv('sonar') 
-    //          {
-    //             sh "mvn sonar:sonar"
-    //          }  
-    //      }
-    //  }
-    //  stage('Quality Gate Check')
-    //  {
-    //      steps
-    //      {
-    //          timeout(time: 1, unit: 'HOURS') 
-    //          {
-    //             waitForQualityGate abortPipeline: true
-    //         }
-    //      }
-    //  }
-     
-    //  stage('Nexus Upload')
-    //  {
-    //      steps
-    //      {
-    //         script
-    //         {
-    //              def readPom = readMavenPom file: 'pom.xml'
-    //              def nexusrepo = readPom.version.endsWith("SNAPSHOT") ? "maven-snapshots" : "maven-releases"
-    //              nexusArtifactUploader artifacts: 
-    //              [
-    //                  [
-    //                      artifactId: "${readPom.artifactId}",
-    //                      classifier: '', 
-    //                      file: "target/${readPom.artifactId}-${readPom.version}.war", 
-    //                      type: 'war'
-    //                  ]
-    //             ], 
-    //                      credentialsId: 'Nexus-Cred', 
-    //                      groupId: "${readPom.groupId}", 
-    //                      nexusUrl: '3.110.88.104:8081', 
-    //                      nexusVersion: 'nexus3', 
-    //                      protocol: 'http', 
-    //                      repository: "${nexusrepo}", 
-    //                      version: "${readPom.version}"
-
-    //         }
-    //      }
-    //  }
-    
-     stage('Docker Build and Tag') {
-              steps {
-                   docker build -t maven-web-app
-                 // sh 'docker build -t sample:latest .'
-               //   sh 'docker tag  sample nagapoornima/sample:latest'
-
-                    }
-
-              }
-
-        //  stage('Login') {
-
-        //       steps {
-
-        //     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-
-        //         }
-
-        //       }
-
-        //   stage('Push') {
-
-        //          steps {
-
-        //           sh 'docker push  nagapoornima/sample:latest'
-
-
-
-        //          }
-
-        //    }
-     // Stopping Docker containers for cleaner Docker run
-     stage('stop previous containers') {
-         steps {
-            sh 'docker ps -f name=myjavaContainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=myjavaContainer -q | xargs -r docker container rm'
+     stage('Execute Sonarqube Report')
+     {
+         steps
+         {
+            withSonarQubeEnv('sonar') 
+             {
+                sh "mvn sonar:sonar"
+             }  
          }
-       }
-
-    stage('Docker Run') {
-     steps{
-         script {
-                sh "docker run -d -p 9090:8080 --rm --name myjavaContainer maven-web-app"
+     }
+     stage('Quality Gate Check')
+     {
+         steps
+         {
+             timeout(time: 1, unit: 'HOURS') 
+             {
+                waitForQualityGate abortPipeline: true
             }
-      }
-    } 
-    //  stage('Update image in K8s manifest file')
-    //  {
-    //      steps
-    //      {
-             
-    //              sh """#!/bin/bash
-    //              sed -i 's/VERSION/$COMMIT/g' deployment.yaml
-    //              """
-    //          }
-    //      }
+         }
+     }
      
-    //  stage('Deploy to K8s cluster')
-    //  {
-    //      steps
-    //      {
-             
-    //          sh '/usr/local/bin/kubectl apply -f deployment.yaml --record=true'
-    //          sh """#!/bin/bash
-    //          sed -i 's/$COMMIT/VERSION/g' deployment.yaml
-    //          """
 
-    //      }
-    //  }
- }
-
-//  post
-//  {
-//      always
-//      {
-//          cleanWs()
-//      }
-//      success
-//      {
-//         slackSend channel: 'build-notifications',color: 'good', message: "started  JOB : ${env.JOB_NAME}  with BUILD NUMBER : ${env.BUILD_NUMBER}  BUILD_STATUS: - ${currentBuild.currentResult} To view the dashboard (<${env.BUILD_URL}|Open>)"
-//         emailext attachLog: true, body: '''BUILD IS SUCCESSFULL - $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
- 
-//         Check console output at $BUILD_URL to view the results.
- 
-//         Regards,
- 
-//         Nithin John George
-//         ''', compressLog: true, replyTo: 'njdevops321@gmail.com', 
-//         subject: '$PROJECT_NAME - $BUILD_NUMBER - $BUILD_STATUS', to: 'njdevops321@gmail.com'
-//      }
-//      failure
-//      {
-//          slackSend channel: 'build-notifications',color: 'danger', message: "started  JOB : ${env.JOB_NAME}  with BUILD NUMBER : ${env.BUILD_NUMBER}  BUILD_STATUS: - ${currentBuild.currentResult} To view the dashboard (<${env.BUILD_URL}|Open>)"
-//          emailext attachLog: true, body: '''BUILD IS FAILED - $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
- 
-//         Check console output at $BUILD_URL to view the results.
- 
-//         Regards,
- 
-//         Nithin John George
-//         ''', compressLog: true, replyTo: 'njdevops321@gmail.com', 
-//         subject: '$PROJECT_NAME - $BUILD_NUMBER - $BUILD_STATUS', to: 'njdevops321@gmail.com'
-//      }
-//  }
 
 }
