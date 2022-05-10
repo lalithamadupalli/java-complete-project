@@ -1,5 +1,3 @@
-//Test1
-//Test2
 def COMMIT
 def BRANCH_NAME
 def GIT_BRANCH
@@ -16,13 +14,10 @@ pipeline
   buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '4', daysToKeepStr: '', numToKeepStr: '4')
   timestamps()
 }
- stages
- {
-     stage('Code checkout')
-     {
-         steps
-         {
-             script
+stages {
+     stage('Code checkout')  {
+         steps {
+            script
              {
                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/poornima4824/java-complete-project.git']]])
                  COMMIT = sh (script: "git rev-parse --short=10 HEAD", returnStdout: true).trim()  
@@ -31,15 +26,20 @@ pipeline
              
          }
      }
-     stage('Build')
-     {   
-         steps
-         {
+    stage('Build') {   
+         steps {
              sh "mvn clean package"
          }
      }
-     stage('Execute Sonarqube Report')
-     {
+     stage('Jmter test') {
+         steps {
+             timeout(time: 1, unit: 'HOURS') 
+             {
+                waitForQualityGate abortPipeline: true
+            }
+         }
+     }
+     stage('Execute Sonarqube Report') {
          steps
          {
             withSonarQubeEnv('sonar') 
@@ -48,17 +48,16 @@ pipeline
              }  
          }
      }
-     stage('Quality Gate Check')
-     {
-         steps
-         {
+    stage('Quality Gate Check') {
+         steps {
              timeout(time: 1, unit: 'HOURS') 
              {
                 waitForQualityGate abortPipeline: true
             }
          }
      }
+
      
 
- }
+    }
 }
