@@ -123,6 +123,27 @@
 	<build>
 		
 		<plugins>
+		    <plugin>
+               <groupId>com.lazerycode.jmeter</groupId>
+               <artifactId>jmeter-maven-plugin</artifactId>
+               <version>${maven.jmeter.plugin.version}</version>
+               <executions>
+                   <execution>
+                     <id>jmeter-tests</id>
+                     <phase>test</phase>
+                     <goals>
+                       <goal>jmeter</goal>
+                     </goals>
+                   </execution>
+                </executions>
+                <configurations>
+                  <configuration>
+                       <generateReports>true</generateReports>
+                       <appendResultsTimestamp>false</appendResultsTimestamp>
+                       <testResultsTimestamp>false</testResultsTimestamp>
+                   </configuration>
+                </configurations>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
