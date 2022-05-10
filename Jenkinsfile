@@ -33,10 +33,7 @@ stages {
      }
      stage('Jmter test') {
          steps {
-             timeout(time: 1, unit: 'HOURS') 
-             {
-                waitForQualityGate abortPipeline: true
-            }
+             sh "mvn test"
          }
      }
      stage('Execute Sonarqube Report') {
