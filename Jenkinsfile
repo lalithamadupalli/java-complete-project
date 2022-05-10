@@ -6,14 +6,6 @@ def GIT_BRANCH
 pipeline
 {
  agent any
- environment
- {
-    //  AWS_ACCOUNT_ID="470022230688"             
-    //  AWS_DEFAULT_REGION="ap-south-1" 
-    //  IMAGE_REPO_NAME="jenkins-java"
-    //  REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-     // DOCKERHUB_CREDENTIALS=credentials('docker')
- }
  tools
  {
       maven 'maven'
