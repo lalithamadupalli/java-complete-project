@@ -5,7 +5,7 @@ pipeline
 {
  agent any
  environment {
-     J2_HOME="/root/apache-jmeter-5.4.3/bin"
+     jmeter="/root/apache-jmeter-5.4.3/bin"
  }
  tools
  {
@@ -36,10 +36,17 @@ stages {
      }
     stage('Jmter test') {
          steps {
-             script {
-                 sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
+               sh """#!/bin/bash
+                 wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
+                 apt install unzip
+                 unzip apache-jmeter.zip
+                 cd apache-jmeter/bin
+                 ./jmeter 
+                  """
+             
+                 //sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
               //sh "mvn clean verify"
-                   }
+                   
          }
      }
     stage('Execute Sonarqube Report') {
