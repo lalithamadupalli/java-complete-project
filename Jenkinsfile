@@ -22,6 +22,7 @@ stages {
         echo "J2_HOME = ${J2_HOME}"
         '''
       }
+    }
      stage('Code checkout')  {
          steps {
             script
