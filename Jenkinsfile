@@ -34,16 +34,10 @@ stages {
              sh "mvn clean package"
          }
      }
-    stage('Jmter test') {
+    stage('Jmeter test') {
          steps {
-               sh """#!/bin/bash
-                 sudo -S wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
-                 sudo -S unzip apache-jmeter.zip
-                 sudo -S cd apache-jmeter/bin
-                 sudo -S ./jmeter 
-                  """
-             
-                 //sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
+            sh "/root/apache-jmeter-5.4.3/bin/jmeter.sh -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/jmeter/JMeter.jtl"
+            // sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
               //sh "mvn clean verify"
                    
          }
