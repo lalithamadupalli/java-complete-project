@@ -4,7 +4,7 @@ def GIT_BRANCH
 pipeline
 {
  agent any
- environments {
+ environment {
      J2_HOME="/root/apache-jmeter-5.4.3/bin"
  }
  tools
