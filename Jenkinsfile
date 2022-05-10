@@ -18,14 +18,6 @@ pipeline
   timestamps()
 }
 stages {
-    stage('intialize') {
-      steps {
-        sh '''
-        echo "PATH= ${PATH}"
-        echo "J2_HOME = ${J2_HOME}"
-        '''
-      }
-    }
      stage('Code checkout')  {
          steps {
             script
@@ -44,9 +36,11 @@ stages {
      }
     stage('Jmter test') {
          steps {
+             script {
                  sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
               //sh "mvn clean verify"
-              }
+                   }
+         }
      }
     stage('Execute Sonarqube Report') {
          steps
