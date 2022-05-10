@@ -37,11 +37,10 @@ stages {
     stage('Jmter test') {
          steps {
                sh """#!/bin/bash
-                 wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
-                 apt install unzip
-                 unzip apache-jmeter.zip
-                 cd apache-jmeter/bin
-                 ./jmeter 
+                 sudo wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.4.3.zip
+                 sudo unzip apache-jmeter.zip
+                 sudo cd apache-jmeter/bin
+                 sudo ./jmeter 
                   """
              
                  //sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/resources/JMeter.jtl"
