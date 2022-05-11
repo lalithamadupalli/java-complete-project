@@ -123,20 +123,45 @@
 	<build>
 		
 		<plugins>
-		    <plugin>
-				<groupId>com.lazerycode.jmeter</groupId>
-				<artifactId>jmeter-maven-plugin</artifactId>
-				<version>1.4.1</version>
-				<executions>
-					<execution>
-						<id>jmeter-tests</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jmeter</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<plugin>
+                    <groupId>com.lazerycode.jmeter</groupId>
+                    <artifactId>jmeter-maven-plugin</artifactId>
+                    <version>3.4.0</version>
+                    <executions>
+                        <!-- Generate JMeter configuration -->
+                        <execution>
+                            <id>configuration</id>
+                            <goals>
+                                <goal>configure</goal>
+                            </goals>
+                        </execution>
+                        <!-- Run JMeter tests -->
+                        <execution>
+                            <id>jmeter-tests</id>
+                            <goals>
+                                <goal>jmeter</goal>
+                            </goals>
+                        </execution>
+                        <!-- Fail build on errors in test -->
+                        <execution>
+                            <id>jmeter-check-results</id>
+                            <goals>
+                                <goal>results</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <testPlanLibraries>
+                             <artifact>org.apache.activemq:activemq-spring:5.15.2</artifact>
+			     <artifact>org.apache.activemq:activemq-client:5.15.2</artifact>
+			     <artifact>org.apache.activemq:activemq-broker:5.15.2</artifact>
+		        </testPlanLibraries>
+                        <excludedArtifacts>
+                             <exclusion>com.sun.jdmk:jmxtools</exclusion>
+                             <exclusion>com.sun.jmx:jmxri</exclusion>
+		                </excludedArtifacts>
+                    </configuration>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
