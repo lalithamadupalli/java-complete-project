@@ -36,7 +36,7 @@ stages {
      }
     stage('Jmeter test') {
          steps {
-            sh "/root/apache-jmeter-5.4.3/bin/jmeter.sh -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/jmeter/JMeter.jtl"
+            sh "/opt/jmeter/jmeter/bin/jmeter.sh -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/jmeter/JMeter.jtl"
             // sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing Diaries.jmx -l src/main/jmeter/JMeter.jtl"
               //sh "mvn clean verify"
                    
