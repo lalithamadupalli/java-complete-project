@@ -5,7 +5,7 @@ pipeline
 {
  agent any
  environment {
-     jmeter="/opt/jmeter/jmeter/bin"
+     jmeter="/opt/jmeter/bin"
  }
  tools
  {
