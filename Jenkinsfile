@@ -39,8 +39,8 @@ stages {
                //sh "/opt/jmeter/bin/jmeter.sh -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing.jmx -p src/main/jmeter//PetStore_LoadTest.properties -JTOTAL_THREADS=2 -JTEST_DURATION=60 -l MyRun1.jtl"
                //step([$class: 'ArtifactArchiver', artifacts: '**/*.jtl'])
               //sh "/opt/jmeter/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing.jmx -l src/main/jmeter/JMeter.jtl -e -o src/main/jmeter/report/output"
-              sh "/opt/jmeter/bin/jmeter.sh -Jjmeter.save.saveservice.output_format=xml -Jjmeter.save.saveservice.output_format=csv -n -t src/main/jmeter/Testing.jmx -l src/main/jmeter/MyRun1.jtl"
-             step([$class: 'ArtifactArchiver', artifacts: '**/*.jtl'])
+              sh "/opt/jmeter/bin/jmeter.sh -Jjmeter.save.saveservice.output_format=html -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing.jmx -l src/main/jmeter/MyRun1.jtl"
+             step([$class: 'ArtifactArchiver', artifacts: '**/*.jtl,**/*.html'])
              //sh "mvn clean verify"
                    
          }
@@ -48,7 +48,7 @@ stages {
     stage('Publish Report') {
             steps {
             
-                perfReport filterRegex: '', sourceDataFiles: '**/*.jtl'
+                perfReport filterRegex: '', sourceDataFiles: '**/*.jtl,**/*.html'
             
             }
         }
