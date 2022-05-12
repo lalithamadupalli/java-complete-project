@@ -138,20 +138,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-                             <groupId>${project.groupId}</groupId>
-                             <artifactId>jmeter-analysis-maven-plugin</artifactId>
-                             <version>${jmeter.analysis.maven.plugin.version}</version>
-                             <executions>
-                                 <execution>
-                                    <goals>
-                                        <goal>analyze</goal>
-                                    </goals>
-                                    <phase>post-integration-test</phase>
-                                 </execution>
-                             </executions>
-		        </plugin>
-
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
