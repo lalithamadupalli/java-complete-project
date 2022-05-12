@@ -36,7 +36,8 @@ stages {
      }
     stage('Jmeter test') {
          steps {
-              sh "/opt/jmeter/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -Jjmeter.save.saveservice.output_format=csv -n -t src/main/jmeter/Testing.jmx -l test.jtl -e -o src/main/report/output "
+               sh "/opt/jmeter/bin/jmeter.sh -Jjmeter.save.saveservice.output_format=xml -Jjmeter.save.saveservice.output_format=csv -n -t src/main/jmeter/Testing.jmx -l src/main/jmeter/JMeter.jtl -e -o src/main/jmeter/output"
+               step([$class: 'ArtifactArchiver', artifacts: '**/*.jtl'])
               //sh "/opt/jmeter/bin/jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/jmeter/Testing.jmx -l src/main/jmeter/JMeter.jtl -e -o src/main/jmeter/report/output"
              // sh "/opt/jmeter/bin/jmeter.sh -Jjmeter.save.saveservice.output_format=xml -Jjmeter.save.saveservice.output_format=csv -n -t src/main/jmeter/Testing.jmx -l src/main/jmeter/JMeter.jtl"
               //sh "mvn clean verify"
