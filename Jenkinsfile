@@ -44,6 +44,14 @@ stages {
                    
          }
      }
+    stage('Publish Report') {
+            steps {
+            
+                perfReport filterRegex: '', sourceDataFiles: '**/*.jtl'
+            
+            }
+        }
+ 
     stage('Execute Sonarqube Report') {
          steps
          {
