@@ -71,6 +71,7 @@ stages {
             }
          }
      }
+}
 //  stage('Gmail') {
 // 	       steps {
 // 		        emailext body: "*${currentBuild.currentResult}:* Job Name:${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER} information at: ${env.BUILD_URL}",
@@ -89,5 +90,4 @@ post {
                mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
               }
            }
-    }
 }
