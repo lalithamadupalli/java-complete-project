@@ -72,21 +72,43 @@ stages {
          }
      }
 }
-//  stage('Gmail') {
-// 	       steps {
-// 		        emailext body: "*${currentBuild.currentResult}:* Job Name:${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER} information at: ${env.BUILD_URL}",
-// 		        subject: 'Declarative Pipeline Build Status',
-// 		        to: 'naga.poornima22@gmail.com'
-// 	                  }
+// post {
+//       success {
+//            sh "echo 'Send mail on success'"
+//            mail to:"naga.poornima22@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build is success."
+//               }
+//        failure {
+//             sh "echo 'Send mail on failure'"
+//              mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build is failed ."
+//               }
 //            }
-post {
-      success {
-           sh "echo 'Send mail on success'"
-           mail to:"naga.poornima22@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build is success."
-              }
-       failure {
-            sh "echo 'Send mail on failure'"
-             mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build is failed ."
-              }
-           }
+ post
+ {
+     always
+     {
+         cleanWs()
+     }
+     success
+     {
+        slackSend channel: 'build-notifications',color: 'good', message: "started  JOB : ${env.JOB_NAME}  with BUILD NUMBER : ${env.BUILD_NUMBER}  BUILD_STATUS: - ${currentBuild.currentResult} To view the dashboard (<${env.BUILD_URL}|Open>)"
+        emailext attachLog: true, body: '''BUILD IS SUCCESSFULL - $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.
+ 
+         Regards,
+         Team
+ 
+     ''', compressLog: true, replyTo: 'naga.poornima22@gmail.com', 
+        subject: '$PROJECT_NAME - $BUILD_NUMBER - $BUILD_STATUS', to: 'naga.poornima22@gmail.com'
+     }
+     failure
+     {
+         slackSend channel: 'build-notifications',color: 'danger', message: "started  JOB : ${env.JOB_NAME}  with BUILD NUMBER : ${env.BUILD_NUMBER}  BUILD_STATUS: - ${currentBuild.currentResult} To view the dashboard (<${env.BUILD_URL}|Open>)"
+         emailext attachLog: true, body: '''BUILD IS FAILED - $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+ 
+         Check console output at $BUILD_URL to view the results. 
+        Regards,
+        Team
+         ''', compressLog: true, replyTo: 'naga.poornima22@gmail.com', 
+         subject: '$PROJECT_NAME - $BUILD_NUMBER - $BUILD_STATUS', to: 'naga.poornima22@gmail.com'
+      }
+  }
 }
