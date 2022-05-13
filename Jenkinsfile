@@ -85,9 +85,6 @@ stages {
  post
  {
      always
-     {
-         cleanWs()
-     }
      success
      {
         slackSend channel: 'build-notifications',color: 'good', message: "started  JOB : ${env.JOB_NAME}  with BUILD NUMBER : ${env.BUILD_NUMBER}  BUILD_STATUS: - ${currentBuild.currentResult} To view the dashboard (<${env.BUILD_URL}|Open>)"
