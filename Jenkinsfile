@@ -89,7 +89,7 @@ stages {
       emailext mimeType: 'text/html',
             subject: "[Jenkins]${currentBuild.fullDisplayName}",
                 to: 'naga.poornima22@gmail.com',
-               body: '''BUILD IS SUCCESSFUL - <a href="${BUILD_URL}</a>''
+               body: '''BUILD IS SUCCESSFUL - $BUILD_STATUS:<a href="${BUILD_URL}</a>''
 //         slackSend channel: 'build-notifications',color: 'good', message: "started  JOB : ${env.JOB_NAME}  with BUILD NUMBER : ${env.BUILD_NUMBER}  BUILD_STATUS: - ${currentBuild.currentResult} To view the dashboard (<${env.BUILD_URL}|Open>)"
 //         emailext attachLog: true, body: '''BUILD IS SUCCESSFULL - $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.
  
