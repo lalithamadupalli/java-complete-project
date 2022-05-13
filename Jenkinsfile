@@ -67,7 +67,7 @@ stages {
          steps {
              timeout(time: 1, unit: 'HOURS') 
              {
-          *      waitForQualityGate abortPipeline: true
+             waitForQualityGate abortPipeline: true
             }
          }
      }
