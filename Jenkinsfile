@@ -71,22 +71,23 @@ stages {
             }
          }
      }
- stage('Gmail') {
-	       steps {
-		        emailext body: "*${currentBuild.currentResult}:* Job Name:${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER} information at: ${env.BUILD_URL}",
-		        subject: 'Declarative Pipeline Build Status',
-		        to: 'naga.poornima22@gmail.com'
-	                  }
-           }
-//     post {
-//           success {
-//                sh "echo 'Send mail on success'"
-//               mail to:"naga.poornima22@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
-//               }
-//          failure {
-//                sh "echo 'Send mail on failure'"
-//                mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
-//               }
+//  stage('Gmail') {
+// 	       steps {
+// 		        emailext body: "*${currentBuild.currentResult}:* Job Name:${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER} information at: ${env.BUILD_URL}",
+// 		        subject: 'Declarative Pipeline Build Status',
+// 		        to: 'naga.poornima22@gmail.com'
+// 	                  }
 //            }
+post {
+	always
+          success {
+               sh "echo 'Send mail on success'"
+              mail to:"naga.poornima22@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
+              }
+         failure {
+               sh "echo 'Send mail on failure'"
+               mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
+              }
+           }
     }
 }
