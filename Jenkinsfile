@@ -67,7 +67,7 @@ stages {
          steps {
              timeout(time: 1, unit: 'HOURS') 
              {
-                waitForQualityGate abortPipeline: true
+          *      waitForQualityGate abortPipeline: true
             }
          }
      }
@@ -82,11 +82,11 @@ stages {
 post {
       success {
            sh "echo 'Send mail on success'"
-           mail to:"naga.poornima22@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
+           mail to:"naga.poornima22@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build is success."
               }
        failure {
             sh "echo 'Send mail on failure'"
-             mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
+             mail to:"naga.poornima22@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build is failed ."
               }
            }
 }
